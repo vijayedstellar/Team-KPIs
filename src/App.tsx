@@ -8,6 +8,7 @@ import AnalystManagement from './components/AnalystManagement';
 import PerformanceTracking from './components/PerformanceTracking';
 import TargetManagement from './components/TargetManagement';
 import Reports from './components/Reports';
+import AnnualReportGenerator from './components/AnnualReportGenerator';
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -22,7 +23,6 @@ function App() {
     const authStatus = localStorage.getItem('isAuthenticated');
     if (authStatus !== 'true' && isAuthenticated) {
       console.log('Authentication mismatch detected, forcing logout');
-      setIsAuthenticated(false);
     }
   }, [isAuthenticated]);
 
@@ -73,6 +73,8 @@ function App() {
         return <TargetManagement />;
       case 'reports':
         return <Reports />;
+      case 'annual-reports':
+        return <AnnualReportGenerator />;
       default:
         return <Dashboard />;
     }

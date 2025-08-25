@@ -9,7 +9,8 @@ import {
   Target,
   Award,
   LogOut,
-  User
+  User,
+  FileText
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
@@ -28,7 +29,8 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, onTabChange }) => 
     { id: 'analysts', label: 'Members', icon: Users },
     { id: 'performance', label: 'Performance', icon: TrendingUp },
     { id: 'targets', label: 'Targets', icon: Target },
-    { id: 'reports', label: 'Reports', icon: Award }
+    { id: 'reports', label: 'Reports', icon: Award },
+    { id: 'annual-reports', label: 'Annual Reports', icon: FileText }
   ];
 
   const handleLogout = () => {
