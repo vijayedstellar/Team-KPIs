@@ -40,12 +40,6 @@ const Login: React.FC = () => {
     }
   };
 
-  // Demo credentials for development (remove in production)
-  const fillDemoCredentials = () => {
-    setEmail('vijay@edstellar');
-    setPassword('Edstellar@2025');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full space-y-8">
@@ -130,16 +124,6 @@ const Login: React.FC = () => {
             </button>
           </form>
 
-          {/* Development Helper - Remove in production */}
-          <div className="mt-6">
-            <button
-              type="button"
-              onClick={fillDemoCredentials}
-              className="w-full text-sm text-blue-600 hover:text-blue-800 underline"
-            >
-              Fill Demo Credentials
-            </button>
-          </div>
         </div>
 
         {/* Footer */}
