@@ -130,6 +130,25 @@ const TargetManagement: React.FC = () => {
     }
   };
 
+  // Auto-calculate annual target when monthly target changes
+  const handleMonthlyTargetChange = (monthlyValue: number, isNewTarget: boolean = false) => {
+    const annualValue = monthlyValue * 13; // 13 months for annual cycle
+    
+    if (isNewTarget) {
+      setNewTarget({
+        ...newTarget,
+        monthly_target: monthlyValue,
+        annual_target: annualValue
+      });
+    } else {
+      setEditValues({
+        ...editValues,
+        monthly_target: monthlyValue,
+        annual_target: annualValue
+      });
+    }
+  };
+
   const handleAddRole = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -327,10 +346,7 @@ const TargetManagement: React.FC = () => {
                       <input
                         type="number"
                         value={editValues.monthly_target}
-                        onChange={(e) => setEditValues({
-                          ...editValues,
-                          monthly_target: parseInt(e.target.value) || 0
-                        })}
+                        onChange={(e) => handleMonthlyTargetChange(parseInt(e.target.value) || 0, false)}
                         className="w-20 px-2 py-1 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     ) : (
@@ -347,6 +363,7 @@ const TargetManagement: React.FC = () => {
                           annual_target: parseInt(e.target.value) || 0
                         })}
                         className="w-24 px-2 py-1 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Auto-calculated"
                       />
                     ) : (
                       target.annual_target.toLocaleString()
@@ -490,20 +507,23 @@ const TargetManagement: React.FC = () => {
                   required
                   min="0"
                   value={newTarget.monthly_target}
-                  onChange={(e) => setNewTarget({ ...newTarget, monthly_target: parseInt(e.target.value) || 0 })}
+                  onChange={(e) => handleMonthlyTargetChange(parseInt(e.target.value) || 0, true)}
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Annual Target (13 months)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Annual Target (13 months) 
+                  <span className="text-xs text-gray-500 ml-1">- Auto-calculated, editable</span>
+                </label>
                 <input
                   type="number"
-                  required
                   min="0"
                   value={newTarget.annual_target}
                   onChange={(e) => setNewTarget({ ...newTarget, annual_target: parseInt(e.target.value) || 0 })}
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Auto-calculated, but you can edit"
                 />
               </div>
               
