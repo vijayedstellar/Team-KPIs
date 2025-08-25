@@ -5,7 +5,6 @@ import { analystService } from '../services/analytService';
 import type { PerformanceRecord, Analyst, KPITarget } from '../lib/supabase';
 import { getPerformanceCategory } from '../utils/performanceCategories';
 import { generateActionItems, formatKPIName } from '../utils/actionItemsGenerator';
-import MockAnnualReport from './MockAnnualReport';
 import toast from 'react-hot-toast';
 
 interface AnnualReportData {
@@ -515,7 +514,106 @@ const AnnualReportGenerator: React.FC = () => {
           </div>
 
           <div id="sample-report-content" className="p-6">
-            <MockAnnualReport />
+            {/* Sample Annual Report Content */}
+            <div className="bg-white rounded-lg shadow-sm border">
+              <div className="p-6 border-b">
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Sample Annual Performance Report - SEO Analyst
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  This is a mock report showing how the system generates comprehensive annual reviews
+                </p>
+              </div>
+
+              <div className="p-6">
+                {/* Report Header */}
+                <div className="text-center mb-8 pb-6 border-b-2 border-gray-200">
+                  <h1 className="text-3xl font-bold text-gray-900 mb-2">Annual Performance Report</h1>
+                  <div className="text-lg text-gray-600 space-y-1">
+                    <div className="flex items-center justify-center gap-2">
+                      <User className="w-5 h-5" />
+                      <span><strong>Sarah Johnson</strong> - SEO Analyst</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>Performance Period: September 2025 - September 2026</span>
+                    </div>
+                    <p className="text-sm">Report Generated: {new Date().toLocaleDateString()}</p>
+                  </div>
+                </div>
+
+                {/* Executive Summary */}
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <Award className="w-5 h-5 text-yellow-600" />
+                    Executive Summary
+                  </h3>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-200">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="text-center">
+                        <div className="text-4xl font-bold text-blue-600">94%</div>
+                        <div className="text-sm text-gray-600 font-medium">Overall Performance</div>
+                        <div className="text-xs text-gray-500 mt-1">Above Target Range</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                          TARGET ACHIEVED
+                        </div>
+                        <div className="text-sm text-gray-600 font-medium mt-1">Performance Grade</div>
+                        <div className="text-xs text-gray-500">84-119% Range</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-4xl font-bold text-indigo-600">13</div>
+                        <div className="text-sm text-gray-600 font-medium">Months Tracked</div>
+                        <div className="text-xs text-gray-500 mt-1">Complete Annual Cycle</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sample KPI Performance */}
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <Target className="w-5 h-5 text-blue-600" />
+                    KPI Performance Summary
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[
+                      { name: 'Monthly Outreaches', actual: 7845, target: 6825, achievement: 115 },
+                      { name: 'Live Links', actual: 218, target: 195, achievement: 112 },
+                      { name: 'High DA Backlinks (90+)', actual: 52, target: 39, achievement: 133 },
+                      { name: 'Content Distribution', actual: 127, target: 104, achievement: 122 },
+                      { name: 'New Blog Contributions', actual: 156, target: 130, achievement: 120 },
+                      { name: 'Blog Optimizations', actual: 89, target: 65, achievement: 137 }
+                    ].map((kpi) => {
+                      const getPerformanceColor = (achievement: number) => {
+                        if (achievement >= 120) return 'bg-blue-100 text-blue-800 border-blue-200';
+                        if (achievement >= 84) return 'bg-green-100 text-green-800 border-green-200';
+                        if (achievement >= 67) return 'bg-amber-100 text-amber-800 border-amber-200';
+                        return 'bg-red-100 text-red-800 border-red-200';
+                      };
+
+                      return (
+                        <div key={kpi.name} className={`p-4 rounded-lg border-2 ${getPerformanceColor(kpi.achievement)}`}>
+                          <div className="font-semibold text-gray-900 text-sm mb-2">{kpi.name}</div>
+                          <div className="text-2xl font-bold mb-1">{kpi.actual.toLocaleString()}</div>
+                          <div className="text-xs text-gray-600 mb-2">Target: {kpi.target.toLocaleString()}</div>
+                          <div className="text-sm font-semibold">
+                            {kpi.achievement}% Achievement
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+                  <p>This is a sample report demonstrating the Annual Performance Report Generator capabilities.</p>
+                  <p>Report Date: {new Date().toLocaleDateString()} | Performance Period: Sep 2025 - Sep 2026</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
