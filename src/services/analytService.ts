@@ -1,26 +1,43 @@
 import { supabase } from '../lib/supabase';
+import { mockAnalysts } from '../data/mockData';
 import type { Analyst } from '../lib/supabase';
 
 export const analystService = {
   async getAllAnalysts(): Promise<Analyst[]> {
+    // For production deployment without Supabase, use mock data
+    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+      return mockAnalysts;
+    }
+    
     const { data, error } = await supabase
       .from('analysts')
       .select('*')
       .order('name');
     
-    if (error) throw error;
-    return data || [];
+    if (error) {
+      console.warn('Supabase error, falling back to mock data:', error);
+      return mockAnalysts;
+    }
+    return data || mockAnalysts;
   },
 
   async getActiveAnalysts(): Promise<Analyst[]> {
+    // For production deployment without Supabase, use mock data
+    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+      return mockAnalysts.filter(analyst => analyst.status === 'active');
+    }
+    
     const { data, error } = await supabase
       .from('analysts')
       .select('*')
       .eq('status', 'active')
       .order('name');
     
-    if (error) throw error;
-    return data || [];
+    if (error) {
+      console.warn('Supabase error, falling back to mock data:', error);
+      return mockAnalysts.filter(analyst => analyst.status === 'active');
+    }
+    return data || mockAnalysts.filter(analyst => analyst.status === 'active');
   },
 
   async createAnalyst(analyst: Omit<Analyst, 'id' | 'created_at' | 'updated_at'>): Promise<Analyst> {
